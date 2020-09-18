@@ -1,0 +1,138 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12" align="center">
+            <button mat-raised-button class="btn btn-success" type= "button" id="showAllMeals"
+              (click)= "showAllMeals()">List All meals</button>
+            <button mat-raised-button class="btn btn-primary" type="button"
+             (click)="dontShowAllMeals()">Add a Meal</button> 
+        </div>
+    </div>
+    <hr>
+    <div class="row" *ngIf= "showMeals">
+        <div class="col-12 col-md-4 mx-auto my-4" *ngFor="let meal of meals, let i = index">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title> <kbd> #{{ meal.mealId }} </kbd> </mat-card-title>
+                    <mat-card-subtitle> <h2> {{ meal.mealName }} </h2> </mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image class="img-responsive" *ngIf="meal.mealURL?.length>0" [src]="meal.mealURL" alt="Photo of {{meal.mealName}}">
+                <img mat-card-image class="img-responsive" *ngIf="meal.mealURL==null" src="../../../../../assets/images/default.jpg" alt="Default photo">
+                <mat-card-content>
+                    <div class="pull-right" *ngIf="!updateMeal[i]">
+                        <button mat-mini-fab class="btn btn-secondary" type= "button" (click)="editMeal(meal,i)">
+                            <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn" class="btn" type= "button" (click)="deleteDialog(meal.mealId)">
+                            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="div" *ngIf="!updateMeal[i]">
+                      <h3 class="text-danger">Rs.{{ meal.mealCost }} </h3>
+                      <p class="text-info">{{ meal.mealDesc }} </p>
+                    </div>
+                    <div class="div" *ngIf="updateMeal[i]">
+                      <form [formGroup]="mealEditForm" (ngSubmit)="updateMeals(meal.mealId)">
+                        <div class="row">
+                          <div class="col-12 mx-auto my-5 form-group">
+                            <label for="mealNewName">Meal Name</label>
+                            <input type="text" id="mealNewName" class="form-control"
+                              formControlName="mealNewName" placeholder="New Name of Meal">
+                                <div *ngIf="mealNewName.invalid && (mealNewName.dirty || mealNewName.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="mealNewName.errors.required"> Name is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="mealNewCost">Meal Cost (in Rs.)</label>
+                            <input type="number" id="mealNewCost" class="form-control"
+                              formControlName="mealNewCost" >
+                              <div *ngIf="mealNewCost.invalid && (mealNewCost.dirty || mealNewCost.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="mealNewCost.errors.required"> Meal Cost is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="mealNewDesc">Description of the meal</label>
+                            <input type="text" id="mealNewDesc" class="form-control"
+                              formControlName="mealNewDesc" placeholder="Description of meal">
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="mealNewURL">Image URL of Meal (500x500)</label>
+                            <input type="url" id="mealNewURL" class="form-control"
+                              formControlName="mealNewURL" >
+                              <div *ngIf="mealNewURL.invalid && (mealNewURL.dirty || mealNewURL.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="mealNewURL.errors.required"> Meal image is required.</div>
+                                </div>
+                          </div>
+                        </div>
+                        <div align="center" *ngIf = "updateMeal[i]">
+                          <button mat-mini-fab class="btn-primary" type= "submit" [disabled]='!mealEditForm.valid'>
+                              <mat-icon aria-hidden="false" aria-label="save icon">save</mat-icon>
+                          </button>
+                          <button mat-mini-fab color="warn" class="btn" type= "button" (click)="updateMeal[i]= false">
+                              <mat-icon aria-hidden="false" aria-label="cancel icon">cancel</mat-icon>
+                          </button>
+                        </div>
+                      </form> 
+                    </div>
+                </mat-card-content>
+            </mat-card>
+          </div>
+    </div>
+    <div class="row" *ngIf= "dontShowMeals">
+        <div class="col-12">
+            <form [formGroup]="mealForm" (ngSubmit)="addNewMeal()">
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                     <label for="mealName">Meal Name</label>
+                     <input type="text" id="mealName" class="form-control"
+                      formControlName="mealName" placeholder="Full Name of Meal">
+                        <div *ngIf="mealName.invalid && (mealName.dirty || mealName.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="mealName.errors.required"> Name is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="mealId">Meal ID</label>
+                    <input type="number" id="mealId" class="form-control"
+                      formControlName="mealId" placeholder="Meal ID eg:123">
+                      <div *ngIf="mealId.invalid && (mealId.dirty || mealId.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="mealId.errors.required"> Meal ID is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="mealCost">Meal Cost</label>
+                    <input type="number" id="mealCost" class="form-control" placeholder="Amount in Rs."
+                      formControlName="mealCost">
+                      <div *ngIf="mealCost.invalid && (mealCost.dirty || mealCost.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="mealCost.errors.required"> Meal Cost is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="mealDesc">Desc</label>
+                    <input type="text" id="Desc" class="form-control"
+                      formControlName="mealDesc" placeholder="Description of Meal">
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="mealURL">Image url of the Meal(500x500)</label>
+                    <input type="text" id="mealURL" class="form-control" placeholder="Url of the image"
+                      formControlName="mealURL">
+                      <div *ngIf="mealURL.invalid && (mealURL.dirty || mealURL.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="mealURL.errors.required"> Image of meal is required (500x500)</div>
+                        </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button class="btn btn-success" type="submit" [disabled]='!mealForm.valid'>Create</button>
+                    <button class="btn btn-danger" type="button" (click)="resetAll()">Clear</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>

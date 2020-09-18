@@ -1,0 +1,65 @@
+[
+    {   
+        "purchaseId": 100221,
+        "purchaseTitle": "Luxury Watch",
+        "purchaseCost": 5000,
+        "purchaseURL": "assets/images/purchases/watch.jpg",
+        "purchaseDesc": "Luxorious watch with embedded beads and Angular engraved"
+    },
+    {
+        "purchaseId": 100222,
+        "purchaseTitle": "Luxury Blanket",
+        "purchaseCost": 2500,
+        "purchaseURL": "assets/images/purchases/blanket.webp",
+        "purchaseDesc": "Luxorious Blanket with Royal design and shine threads to gift closed ones"
+    },
+    {
+        "purchaseId": 100223,
+        "purchaseTitle": "Luxury Chocolates",
+        "purchaseCost": 1000,
+        "purchaseURL": "assets/images/purchases/chocolates.webp",
+        "purchaseDesc": "Luxorious Gourmet chocolates to show your love"
+    },
+    {
+        "purchaseId": 100224,
+        "purchaseTitle": "Luxury Dine-gift",
+        "purchaseCost": 25000,
+        "purchaseURL": "assets/images/purchases/dine_gift.jpg",
+        "purchaseDesc": "Luxorious basket to Dine-in with your beloved ones"
+    },
+    {
+        "purchaseId":11223,
+        "purchaseTitle": "Boat Headphones",
+        "purchaseCost": 2600,
+        "purchaseURL": "assets/images/purchases/headphone.jpg",
+        "purchaseDesc": "Super Stylish Boat Headphones with super Bass"
+    },
+    {
+        "purchaseId": 22112,
+        "purchaseTitle": "Sony Alpha",
+        "purchaseCost": "6000",
+        "purchaseURL":"assets/images/purchases/camera.jpg",
+        "purchaseDesc":"Sony Alpha Camer to capture your memorable moments"
+    },
+    {
+        "purchaseId":12311,
+        "purchaseTitle": "Handbag from GUCCI",
+        "purchaseCost": 5500,
+        "purchaseURL": "assets/images/purchases/handbag.jpg",
+        "purchaseDesc": "stylish branded handbag for women from GUCCI"
+    },
+    {
+        "purchaseId":11234,
+        "purchaseTitle": "Avengers Toys",
+        "purchaseCost": 2500,
+        "purchaseURL": "assets/images/purchases/avengers_toys.png",
+        "purchaseDesc": "Avengers Action figures of Hulk & Thanos"
+    },
+    {
+        "purchaseId": 12211,
+        "purchaseTitle": "Spiderman Comics",
+        "purchaseCost": 600,
+        "purchaseURL": "assets/images/purchases/comics.jpg",
+        "purchaseDesc": "Special Edition of Spiderman goes wild comics"
+    }
+]

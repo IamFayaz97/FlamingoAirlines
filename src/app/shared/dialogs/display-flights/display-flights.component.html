@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="text-success text-center">Flights flying today</h1>
+<div class="container-fluid">
+<div class="row">
+  <div mat-dialog-content class="mat-typography col-12 mx-auto my-12" *ngFor= "let flight of flights, let i = index">
+  
+    <mat-card style="margin:2em;" >
+      <mat-card-title> {{ flight.flightNo }}</mat-card-title>
+      <div class="mat-card-subtitle">{{ flight.flightRoute}} </div>
+      <mat-card-content>
+          <h2>{{ flight.flightRoute }}</h2>
+          <h3>{{ flight.flightTime }}</h3>
+          <button mat-raised-button color="accent" type="button" *ngIf="validateFlights(flight) || isAdmin()"
+        (click)="cancel(flight)">
+            Select</button>
+          <button mat-raised-button color="accent" type="button" 
+            *ngIf="!validateFlights(flight) && modalData.user=='staff-checkin'" disabled>
+              Departed</button>
+          <button mat-raised-button color="accent" type="button" 
+            *ngIf="!validateFlights(flight) && modalData.user=='staff-inflight'" disabled>
+              Yet to depart</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+</div>

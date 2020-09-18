@@ -1,0 +1,31 @@
+.nav-link{
+    margin: 10px;
+}
+.mat-toolbar{
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: larger;
+}
+.navbar-brand{
+    font-style: italic;
+    font-family: "Playfair Display";
+    font-size: 3vw;
+    font-weight: 500;
+    font-display: block;
+    width: 80%;
+}
+.navbar{
+    background-color: #202529;
+}
+.captiontext{
+    font-size: 1vw;
+    color:  white;
+}
+.mat-icon{
+    color: white;
+    font-size: 3vw;
+    padding-right: 4vw;
+}
+.btn{
+    margin: 5px;
+}

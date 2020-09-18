@@ -1,0 +1,77 @@
+[
+    {
+        "mealId": 1,
+        "mealName": "Vegetable Biryani",
+        "mealCost": 300,
+        "mealURL": "assets/images/meals/vegetable_biryani.jpg",
+        "mealDesc": "Enjoy the healthy Veggie Biryani with Indian flavours and spices, that makes you want more...!"
+        
+    },
+    {
+        "mealId": 2,
+        "mealName": "Chicken Biryani",
+        "mealCost": 400,
+        "mealURL": "assets/images/meals/chicken_biryani.jpeg",
+        "mealDesc": "Enjoy the exotic Hyderabadi Chicken Dum Biryani with flavours and spices, that makes your taste buds flow"
+
+    },
+    {
+        "mealId": 3,
+        "mealName": "Spcl Chicken Biryani",
+        "mealCost": 500,
+        "mealURL": "assets/images/meals/spcl_chicken_biryani.jpg",
+        "mealDesc": "Enjoy the Continental Chicken Chettinad Biryani with flavours and spices of South..!"
+
+    },
+    {
+        "mealId": 4,
+        "mealName": "Brahmin Meal",
+        "mealCost": 250,
+        "mealURL": "assets/images/meals/brahmin_meal.jpg",
+        "mealDesc": "Enjoy the Cultural meal of Brahmin with rice, dal and other Varieties that fill your plate and stomach"
+
+    },
+    {
+        "mealId": 5,
+        "mealName": "Chicken Burger",
+        "mealCost": 200,
+        "mealURL": "assets/images/meals/chicken_burger.jpg",
+        "mealDesc": "Enjoy the tasty Chicken Burger to fill your interest of stomach and make you want more"
+    },
+    {
+        "mealId": 6,
+        "mealName": "Egg Burger",
+        "mealCost": 180,
+        "mealURL": "assets/images/meals/egg_burger.jpg",
+        "mealDesc": "None tastes better than a burger with a spicy egg recipe added ingredients of leaves and sauce"
+    },
+    {
+        "mealId": 7,
+        "mealName": "Chicken Chowmein",
+        "mealCost": 250,
+        "mealURL": "assets/images/meals/chicken_chowmein.jpg",
+        "mealDesc": "All time evergreen favourite chinese Chicken chowmein to make you long for more"
+    },
+    {
+        "mealId": 8,
+        "mealName": "Veg Chowmein",
+        "mealCost": 200,
+        "mealURL": "assets/images/meals/veg_chowmein.jpg",
+        "mealDesc": "Enjoy Chinese Chowmein taste with healthy veggies and sauces that make your taste buds wet"
+    },
+    {
+        "mealId": 9,
+        "mealName": "Veg Pan Medium Pizza",
+        "mealCost": 400,
+        "mealURL": "assets/images/meals/veg_pizza.jpg",
+        "mealDesc": "Enjoy the hot pan Pizza with crispy edges and swirling sauces that are a taste of time"
+    },
+    {
+        "mealId": 10,
+        "mealName": "Chicken Pizza",
+        "mealCost": 500,
+        "mealURL": "assets/images/meals/chicken_pizza.jpg",
+        "mealDesc": "The extra tasty and spicy, the best in town Chicken Pizza served hot with tomato sauce"
+    }
+
+]

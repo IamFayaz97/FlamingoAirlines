@@ -1,0 +1,126 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12" align="center">
+            <button mat-raised-button class="btn btn-success" type= "button" id="showAllServices"
+              (click)= "showAllServices()">List All Services</button>
+            <button mat-raised-button class="btn btn-primary" type="button"
+             (click)="dontShowAllServices()">Add a Service</button> 
+        </div>
+    </div>
+    <hr>
+    <div class="row" *ngIf= "showServices">
+        <div class="col-12 mx-auto my-5" *ngFor="let service of ancServices, let i = index">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title> <kbd> #{{ service.serviceId }} </kbd> </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="pull-right" *ngIf="!updateServices[i]">
+                        <button mat-mini-fab class="btn btn-secondary" type= "button" (click)="editService(service,i)">
+                            <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn" class="btn" type= "button" (click)="deleteDialog(service.serviceId)">
+                            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="div" *ngIf="!updateServices[i]">
+                      <h2>{{ service.serviceName }}</h2>
+                      <h3>Rs.{{ service.serviceCost }} </h3>
+                      <p class="text-info">{{ service.serviceDesc }} </p>
+                    </div>
+                    <div class="div" *ngIf="updateServices[i]">
+                      <form [formGroup]="serviceEditForm" (ngSubmit)="updateService(service.serviceId)">
+                        <div class="row">
+                          <div class="col-12 mx-auto my-5 form-group">
+                            <label for="serviceNewName">Service Name</label>
+                            <input type="text" id="serviceNewName" class="form-control"
+                              formControlName="serviceNewName" placeholder="New Name of Service">
+                                <div *ngIf="serviceNewName.invalid && (serviceNewName.dirty || serviceNewName.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="serviceNewName.errors.required"> Name is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="serviceNewCost">Date Of Birth</label>
+                            <input type="number" id="serviceNewCost" class="form-control"
+                              formControlName="serviceNewCost">
+                              <div *ngIf="serviceNewCost.invalid && (serviceNewCost.dirty || serviceNewCost.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="serviceNewCost.errors.required"> Cost of the Service is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="serviceNewDesc">Desc</label>
+                            <input type="text" id="serviceNewDesc" class="form-control"
+                                formControlName="serviceNewDesc" placeholder="Description of Service">
+                            <div *ngIf="serviceNewDesc.invalid && (serviceNewDesc.dirty || serviceNewDesc.touched)"
+                                    class="alert alert-danger">
+                                <div *ngIf="serviceNewDesc.errors.required">Please provide Description of service</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div align="center" *ngIf = "updateServices[i]">
+                          <button mat-mini-fab class="btn-primary" type= "submit" [disabled]='!serviceEditForm.valid'>
+                              <mat-icon aria-hidden="false" aria-label="save icon">save</mat-icon>
+                          </button>
+                          <button mat-mini-fab color="warn" class="btn" type= "button" (click)="updateServices[i]= false">
+                              <mat-icon aria-hidden="false" aria-label="cancel icon">cancel</mat-icon>
+                          </button>
+                        </div>
+                      </form> 
+                    </div>
+                </mat-card-content>
+            </mat-card>
+          </div>
+    </div>
+    <div class="row" *ngIf= "dontShowServices">
+        <div class="col-12">
+            <form [formGroup]="serviceForm" (ngSubmit)="addNewService()">
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                     <label for="serviceName">Service Name</label>
+                     <input type="text" id="serviceName" class="form-control"
+                      formControlName="serviceName" placeholder="Full Name of Service">
+                        <div *ngIf="serviceName.invalid && (serviceName.dirty || serviceName.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="serviceName.errors.required"> Name is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="serviceId">Service Id</label>
+                    <input type="number" id="serviceId" class="form-control"
+                      formControlName="serviceId" placeholder="Service ID eg:123">
+                      <div *ngIf="serviceId?.invalid && (serviceId.dirty || serviceId.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="serviceId.errors.required"> Service Id is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="serviceCost">Cost of the Service</label>
+                    <input type="number" id="serviceCost" class="form-control" 
+                      formControlName="serviceCost" placeholder="Amount in Rs.">
+                    <div *ngIf="serviceCost.invalid && (serviceCost.dirty || serviceCost.touched)"
+                          class="alert alert-danger">
+                        <div *ngIf="serviceCost.errors.required">Cost of Service is required.</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="serviceDesc">Desc</label>
+                    <input type="text" id="serviceDesc" class="form-control"
+                      formControlName="serviceDesc" placeholder="Description of Service">
+                    <div *ngIf="serviceDesc.invalid && (serviceDesc.dirty || serviceDesc.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="serviceDesc.errors.required">Please provide Description of service</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button class="btn btn-success" type="submit" [disabled]='!serviceForm.valid'>Create</button>
+                    <button class="btn btn-danger" type="button" (click)="resetAll()">Clear</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>

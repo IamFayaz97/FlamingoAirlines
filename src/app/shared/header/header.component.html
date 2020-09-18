@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar static-top">
+  <div class="container">
+      <mat-toolbar color="black">
+        <a class="navbar-brand" align="left" href="#" style="color: aliceblue;">FLAMINGO AIRLINES 
+          <mat-icon>flight_takeoff</mat-icon>
+          <a class="captiontext" style="color: white;">...............fly all the way</a> 
+        </a>
+      </mat-toolbar> 
+      <div class="pull-right">
+        <button *ngIf="passengerService.loggedIn" class="btn-xs btn-danger" mat-flat-button (click)="logOut()"
+        align="right">LOGOUT</button>
+          <button mat-flat-button class="btn btn-block btn-lg" *ngIf="check('Admin')" routerLink="/admin/dashboard">Go to Admin Dashboard</button>
+          <button mat-flat-button class="btn" *ngIf="check('Inflight')" routerLink='/staff/inflight'>Go to Inflight board</button>
+          <button mat-flat-button class="btn" *ngIf="check('Check-In')" routerLink='/staff/checkin'>Go to Check-In board</button>
+          <button mat-flat-button *ngIf="!passengerService.loggedIn" (click)="login()">LOGIN
+            <img src="../../../assets/images/logo/admin_logo.png" alt="Admin logo" class="d-inline-block align-top" width="30" height="30">
+          </button>
+          <br>
+      </div>
+  </div>
+</nav>

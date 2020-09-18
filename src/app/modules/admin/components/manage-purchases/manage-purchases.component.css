@@ -1,0 +1,8 @@
+.btn{
+    margin: 5px;
+}
+mat-card img{
+    object-fit: fill; /*this makes the image in src fit to the size specified below*/
+    width: auto; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+    height: auto;
+  }

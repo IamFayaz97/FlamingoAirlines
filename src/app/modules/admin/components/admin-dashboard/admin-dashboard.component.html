@@ -1,0 +1,15 @@
+<div class="container">
+  <h1 class="text-center"> <--- DASHBOARD ---></h1>
+  <hr>
+  <div class="row">
+    <div class="col-12 col-md-6 mx-auto my-4" *ngFor="let card of cards, let i = index">
+        <mat-card (click)="manage(card.title)">
+            <mat-card-header>
+                <mat-card-title> <h2><kbd> {{ card.title }} </kbd></h2> </mat-card-title>
+                <mat-card-subtitle> Click to manage</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image class="img-responsive" [src]=card.url alt="Photo of {{card.url}}">
+        </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title class="text-success text-center">{{ modalData.title }}</h1>
+<div mat-dialog-content class="text-info text-center">
+  <h3>{{ modalData.description }}</h3>
+</div>
+<div mat-dialog-actions align= "center">
+  <button mat-raised-button (click)="actionDialog()" class="btn btn-info text-center btn-lg btn-block">
+    {{modalData.actionBtnText}}</button>
+</div>

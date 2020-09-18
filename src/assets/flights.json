@@ -1,0 +1,63 @@
+[
+    {
+        "flightNo": "AB002",
+        "flightCompany": "SpiceJet",
+        "flightRoute": "HYD-BGLR",
+        "flightTime": "02:00"
+    },
+    {
+        "flightNo": "AB015",
+        "flightCompany": "SpiceJet",
+        "flightRoute":"HYD-PUN",
+        "flightTime": "06:00"
+    },
+    {
+        "flightNo": "VSx01",
+        "flightCompany": "Vistara",
+        "flightRoute": "HYD-BBSR",
+        "flightTime": "08:00"
+    },
+    {
+        "flightNo": "IDG2x1",
+        "flightCompany": "Indigo",
+        "flightRoute": "HYD-BGLR",
+        "flightTime": "08:50"
+    },
+    {
+        "flightNo": "VSx14",
+        "flightCompany": "Vistara",
+        "flightRoute": "HYD-BGLR",
+        "flightTime": "09:00"
+    },
+    {
+        "flightNo": "IDG2x31",
+        "flightCompany": "Indigo",
+        "flightRoute": "HYD-BGLR",
+        "flightTime": "12:50"
+    },
+    {
+        "flightNo": "VSx12",
+        "flightCompany": "Vistara",
+        "flightRoute": "HYD-MUM",
+        "flightTime": "14:00"
+    },
+    {
+        "flightNo": "VSx16",
+        "flightCompany": "Vistara",
+        "flightRoute": "HYD-CHN",
+        "flightTime": "16:00"
+    },
+    {
+        "flightNo": "AB20",
+        "flightCompany": "SpiceJet",
+        "flightRoute": "HYD-DLI",
+        "flightTime": "20:00"
+    },
+    {
+        "flightNo": "AB22",
+        "flightCompany": "Vistara",
+        "flightRoute": "HYD-MUM",
+        "flightTime": "22:00"
+    }
+
+]

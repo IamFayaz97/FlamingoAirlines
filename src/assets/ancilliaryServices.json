@@ -1,0 +1,50 @@
+[
+    {
+        "serviceId": 1,
+        "serviceName": "Priority Booking",
+        "serviceCost": 1000 ,
+        "serviceDesc": "This will help you in booking of seats over in with Priority"
+    },
+    {
+        "serviceId": 2,
+        "serviceName": "Hotel Stay",
+        "serviceCost": 3000 ,
+        "serviceDesc": "Booking of Hotel suite/Lounge nearby to enjoy hassle free travel in case of long journey to avoid waiting in Airport"
+    },
+    {
+        "serviceId": 3,
+        "serviceName": "Airport parking",
+        "serviceCost": 500 ,
+        "serviceDesc": "Parking your vehicle in the Airport parking places that safeguards your vehicles till you return"
+        },
+    {
+        "serviceId": 4,
+        "serviceName": "In-Flight Magazine",
+        "serviceCost": 500 ,
+        "serviceDesc": "Enjoy your journey with desired Magazine and look into the outgoing scenarios"
+    },
+    {
+        "serviceId": 5,
+        "serviceName": "Auto Upgrade of class",
+        "serviceCost": 500,
+        "serviceDesc": "Upgrading to Business class"
+    },
+    {
+        "serviceId": 6,
+        "serviceName": "Baggage Insurance",
+        "serviceCost": 2500,
+        "serviceDesc": "secure the safety and damage of your bags in case of connecting flights"
+    },
+    {
+        "serviceId": 7,
+        "serviceName": "Food Voucher",
+        "serviceCost":1000,
+        "serviceDesc": "Voucher to enjoy your meal at any place in Airport"
+    },
+    {
+        "serviceId": 8,
+        "serviceName": "Complimentary Drinks",
+        "serviceCost":500,
+        "serviceDesc": "Drinks to comfort the time of your journey"
+    }
+]

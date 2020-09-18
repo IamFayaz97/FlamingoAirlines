@@ -1,0 +1,82 @@
+<div class="container color-dark" align="center">
+<h2 *ngIf="!passengerService.msgforInvalidLogin" >Welcome User...!</h2>
+<h2 *ngIf="passengerService.msgforInvalidLogin" class="text-danger">Please login first using Credentials...!</h2>
+<h3 *ngIf="showLogOutMessage" class="text-danger">Kindly logout from the present role</h3>
+    <div *ngIf="!googleUser">
+        <form [formGroup]="loginForm" (ngSubmit)="checkLogin()">
+            <div class="row">
+                <div class="col-auto mx-auto my-5 form-group">
+                    <label for="userName">User Name</label>
+                    <input type="text" id="userName" class="form-control" autocomplete="off"
+                    formControlName="userName" placeholder="Enter Username" >
+                        <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="userName.errors.required"> Name is required.</div>
+                        </div>
+                </div>
+                <div class="col-auto mx-auto my-5 form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control"
+                    formControlName="password" placeholder="Enter your password" >
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="password.errors.required"> Password is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="userName.value =='staff' " >
+                <div class="col-auto mx-auto form-group">
+                    <mat-form-field>
+                        <mat-label>Please select the type</mat-label>
+                        <mat-select class="form-control" formControlName="userType" 
+                            placeholder="Please select" required="typeOfUser=='staff'">
+                            <mat-option value="checkin">Check-In to flight</mat-option>
+                            <mat-option value="inflight">In-flight purpose</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div> 
+            <div>
+                <div class="col-auto mx-auto form-group" class ="alert alert-danger" *ngIf="someErrors">
+                    <kbd> Incorrect Credentials...! Please try again </kbd>
+                </div>
+                <button mat-raised-button class="btn btn-primary" type= "submit" [disabled]='!loginForm.valid'>
+                    Login</button>
+                <button mat-raised-button color="warn" class="btn" type= "button" (click)="resetAll()">
+                    Reset</button>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-8 mx-auto"> 
+                <br>
+                    <p>(or)</p>
+                <br>   
+                <button mat-raised-button class="btn-danger btn-block" type="button" (click)="googleUser=true">Staff Login with Google</button>    
+            </div>    
+        </div>
+    </div>
+    <div *ngIf="googleUser">
+        <div class="row" >
+            <div class="col-10 mx-auto">
+                <mat-form-field>
+                    <mat-label>Please select the type</mat-label>
+                    <mat-select [(ngModel)]="googleUserSelection" 
+                        placeholder="Please select" [required]="googleUser">
+                        <mat-option value="checkin">Check-In to flight</mat-option>
+                        <mat-option value="inflight">In-flight purpose</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div> 
+        <div>
+            <div align="center">
+                    <button mat-raised-button color="warn" (click)="signInWithGoogle()" class=" btn btn-lg">
+                        Login through Google
+                    </button>
+                    <button mat-raised-button color="primary" (click)="googleUser=false" class="btn btn-lg">
+                        Cancel
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>

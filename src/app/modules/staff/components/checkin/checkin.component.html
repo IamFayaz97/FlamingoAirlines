@@ -1,0 +1,164 @@
+<div class="container">
+    <mat-tab-group [selectedIndex]="selectedIndex">
+        <mat-tab label="FLIGHT DETAILS" id="flightDetails">
+            <mat-card style="margin:2em;" *ngIf="selectedFlight!=null">
+                <h2 align = 'left'>Details of the selected Flight:</h2>
+                <mat-card-title> {{ selectedFlight.flightNo }}</mat-card-title>
+                <div class="mat-card-subtitle">{{ selectedFlight.flightRoute}} </div>
+                <mat-card-content>
+                    <h4>{{ selectedFlight.flightTime }}</h4>
+                </mat-card-content>
+              </mat-card>
+            <h2 align="center" *ngIf="!allowCheckin">Seating of Passengers</h2>
+            <h3 align="center" *ngIf="allowCheckin">Please select the seats to check-in</h3>
+            <div class="row">
+                <div class="col-6" align="left">
+                    <input  type="checkbox" name="checkedmeal" checked [disabled]="!allowUndoCheckIn">
+                            <label><h5>checked-in passenger</h5></label><br>
+                    <input  type="checkbox" name="normalPassenger" [disabled]="!allowCheckin" >
+                            <label><h5>normal passenger</h5></label>
+                </div><br>
+                <div class="col-6" align="left">
+                    <input  type="checkbox" name="Infant" disabled style="outline: 2px solid yellow">
+                            <label><h5>passengers having Infants</h5></label><br>
+                    <input  type="checkbox" name="WheelChair" disabled style="outline: 2px solid red">
+                            <label><h5>passengers with wheelchair</h5></label>
+                    <br><br><br>
+                </div>
+            </div>
+            <div class="theatre">
+                <div class="screen">This way front</div>
+                <div class="exit exit--front"></div>
+                <div class="seating  col-12"> 
+                    <div class="row">
+                        <div *ngFor = "let seat of checkedSeats; let i=index">
+                          <input  type="checkbox" name="seating" [value]="seat"  
+                          [checked]="checkedInPassenger(seat) || checkboxes[i]"  
+                          [disabled]="reservedStatus(seat)"
+                          [style.outline]="getTypeOfPassenger(seat)" (change)="onChange($event, i)">
+                          <label>{{seat}}</label><br>
+                            <div class="aisle" align="center">
+                              <span class="aisle-number">&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 *ngIf="showErrorMessage && allowCheckin" style="color: red;">
+                        You can select only one seat</h4>
+                    <h4 *ngIf="showErrorMessage && allowUndoCheckIn" style="color: red;">
+                        you can deselect only one</h4>
+                    <button mat-raised-button color="primary" (click)="bookIn()" 
+                        *ngIf="allowCheckin && !changeRequest" class="btn">Book seat
+                    </button>
+                    <button mat-raised-button class="btn btn-info" type= "button" (click)="changeSeating()"
+                        *ngIf="changeRequest">Change Seat
+                    </button>
+                    <button mat-raised-button color="warn" *ngIf="allowUndoCheckIn" 
+                            (click)="undoCheckIn()" class="btn">
+                            Undo Check-In
+                    </button>
+                    <button mat-raised-button color="warn" *ngIf="allowCheckin || allowUndoCheckIn" 
+                            class="btn" (click)="resetCheckIn()">
+                            Cancel
+                    </button>
+                </div>
+                <div class="exit exit--back"></div>
+            </div>
+            <br><br>
+            <div align="center">
+                <button mat-raised-button color="warn" (click)="undoCheckInFromFlight()" 
+                    *ngIf="!showFilters && !allowCheckin" class="btn btn-md btn-block" style="max-width: 400px;">
+                 Undo Check-in of a passenger by seat</button>
+            </div>
+        </mat-tab>
+        <mat-tab label="PASSENGERS DETAILS" active>
+                <button mat-raised-button class= "btn btn-primary" type="button" *ngIf="!showFilters" (click)="showFilters=true">
+                    FILTER <mat-icon>filter_list</mat-icon></button>
+                <p *ngIf="showFilters" align="center">
+                    Filter passengers based on :
+                    <button mat-stroked-button class= "btn" color="primary" (click)="filter('infant')">Passengers with Infant</button>
+                    <button mat-stroked-button class= "btn" color="primary" (click)="filter('wheelchair')">Passengers for WheelChair</button>
+                    <button mat-stroked-button class= "btn" color="primary" (click)="filter('checkedin')">CHECKED-IN</button>
+                    <button mat-stroked-button class= "btn" color="primary" (click)="filter('notcheckedin')">NOT CHECKED-IN</button>
+                    <button mat-raised-button color="warn" (click)="filter('cancelfilters')">Close Filters</button>
+                </p>
+                <h2>Total Passengers aboard are {{totalunfilteredPassengers}}</h2>
+                <h4 *ngIf="showFilters"> Passengers based on ur filters are: {{totalPassengers}}</h4>
+                <div class="row">
+                    <div class="col-10 mx-auto my-5" *ngFor="let passenger of passengers, let i = index">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title *ngIf="passenger.passportNo!=null">
+                                    <kbd> #{{ passenger.passportNo }} </kbd>
+                                </mat-card-title>
+                                <mat-card-subtitle *ngIf="passenger.seat!=null">
+                                    <kbd style="background-color: darkgrey; font-weight: bold;">SEAT NUMBER: {{ passenger.seat }}</kbd>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="pull-right">
+                                    <button mat-raised-button color="accent" class="btn" type= "button" 
+                                        *ngIf="!passenger.seat && !showOptions[i] && !showFilters" (click)="seeOptions(i,passenger)">
+                                        Check-in
+                                    </button>
+                                    <button mat-raised-button class="btn btn-info" type= "button" 
+                                        *ngIf="passenger.seat && !showFilters" (click)="changeSeat(passenger)">
+                                        Change Seat
+                                    </button>
+                                    <button mat-raised-button class="btn btn-danger" type= "button" 
+                                        *ngIf="passenger.seat && !showFilters" (click)="passenger.seat=null">
+                                        Undo Check-in
+                                    </button>
+                                </div>
+                                <h2>{{ passenger.passengerName }}</h2>
+                                <kbd *ngIf="passenger.hasInfant" style="background-color: rgb(71, 126, 216);">
+                                    Has Infant 
+                                    <mat-icon style="vertical-align: middle;">child_care</mat-icon>
+                                </kbd>
+                                <kbd *ngIf="passenger.needWheelChair" style="background-color: rgb(216, 120, 139);">
+                                    needs WheelChair
+                                    <mat-icon style="vertical-align: middle;">event_seat</mat-icon>
+                                </kbd>
+                                <hr>
+                                <div class="row" *ngIf="!updatePassengers[i]">
+                                    <div class="col-auto">
+                                        <p style="color: crimson;" *ngIf="!passenger.passengerServices">No Services Opted</p>
+                                        <h3 *ngIf="passenger.passengerServices">Selected Services:
+                                            <div *ngFor="let service of passenger.passengerServices">
+                                                <h4 class="text-info"><input type="checkbox" [checked]="true" disabled> {{service}}</h4>
+                                            </div>
+                                        </h3>
+                                        <br>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p style="color: crimson;" *ngIf="!passenger.passengerMeals">No Meals Opted</p>
+                                        <h3 *ngIf="passenger.passengerMeals">Selected Meals:
+                                            <div *ngFor="let meal of passenger.passengerMeals">
+                                                <h4 class="text-info"><input type="checkbox" [checked]="true" disabled> {{meal}}</h4>
+                                            </div>
+                                        </h3>
+                                        <br>
+                                    </div>
+                                </div>
+                                <mat-slide-toggle color="primary" 
+                                    [(ngModel)]="hasInfant" *ngIf="showOptions[i]">
+                                    Having Infant
+                                </mat-slide-toggle><br>
+                                <mat-slide-toggle color="primary" 
+                                    [(ngModel)]="needsWheelChair" *ngIf="showOptions[i]">
+                                    Needs Wheel Chair
+                                </mat-slide-toggle>
+                                <button mat-raised-button color="primary" class="btn" type= "button" 
+                                    *ngIf="showOptions[i]" (click)="checkInToFlight(i)">
+                                    Check-in
+                                </button>
+                                <button mat-raised-button color="warn" class="btn" type= "button" 
+                                    *ngIf="showOptions[i]" (click)="resetCheckIn()">
+                                    Cancel
+                                </button>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

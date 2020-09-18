@@ -1,0 +1,146 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12" align="center">
+            <button mat-raised-button class="btn btn-success" type= "button" id="showAllPurchases"
+              (click)= "showAllPurchases()">List All Purchases</button>
+            <button mat-raised-button class="btn btn-primary" type="button"
+             (click)="dontShowAllPurchases()">Add a Purchase</button> 
+        </div>
+    </div>
+    <hr>
+    <div class="row" *ngIf= "showPurchases">
+        <div class="col-12 col-md-4 mx-auto my-4" *ngFor="let purchase of purchases, let i = index" >
+            <mat-card >
+                <mat-card-header>
+                    <mat-card-title> <kbd> #{{ purchase.purchaseId }} </kbd> </mat-card-title>
+                    <mat-card-subtitle> <h2>{{ purchase.purchaseTitle }}</h2> </mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image class="img-responsive" *ngIf="purchase.purchaseURL==null" src= "../../../../../assets/images/default.jpg" alt="Defualt photo">
+                <img mat-card-image class="img-responsive" *ngIf="purchase.purchaseURL!=null" src= {{purchase.purchaseURL}} alt="Photo of {{purchase.purchaseTitle}}">
+                <mat-card-content>
+                    <div class="pull-right" *ngIf="!updatePurchases[i]">
+                        <button mat-mini-fab class="btn btn-secondary" type= "button" (click)="editPurchase(purchase,i)">
+                            <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn" class="btn" type= "button" (click)="deleteDialog(purchase.purchaseId)">
+                            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="div" *ngIf="!updatePurchases[i]">
+                      <h3>Rs.{{ purchase.purchaseCost }} </h3>
+                      <p class="text-info">{{ purchase.purchaseDesc }} </p>
+                    </div>
+                    <div class="div" *ngIf="updatePurchases[i]">
+                      <form [formGroup]="purchaseEditForm" (ngSubmit)="updatePurchase(purchase.purchaseId)">
+                        <div class="row">
+                          <div class="col-12 mx-auto my-5 form-group">
+                            <label for="purchaseNewName">Purchase Name</label>
+                            <input type="text" id="purchaseNewName" class="form-control"
+                              formControlName="purchaseNewName" placeholder="New Name of Purchase">
+                                <div *ngIf="purchaseNewName.invalid && (purchaseNewName.dirty || purchaseNewName.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="purchaseNewName.errors.required"> Name is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="purchaseNewCost">Purchase Cost </label>
+                            <input type="number" id="purchaseNewCost" class="form-control"
+                              formControlName="purchaseNewCost">
+                              <div *ngIf="purchaseNewCost.invalid && (purchaseNewCost.dirty || purchaseNewCost.touched)"
+                                    class="alert alert-danger">
+                                    <div *ngIf="purchaseNewCost.errors.required"> Cost of the Purchase is required.</div>
+                                </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="purchaseNewDesc">Desc</label>
+                            <input type="text" id="purchaseNewDesc" class="form-control"
+                                formControlName="purchaseNewDesc" placeholder="Description of Purchase">
+                            <div *ngIf="purchaseNewDesc.invalid && (purchaseNewDesc.dirty || purchaseNewDesc.touched)"
+                                    class="alert alert-danger">
+                                <div *ngIf="purchaseNewDesc.errors.required">Please provide Description of purchase</div>
+                            </div>
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="purchaseNewURL">URL</label>
+                            <input type="text" id="purchaseNewURL" class="form-control"
+                                formControlName="purchaseNewURL" placeholder="Image URL of Purchase">
+                            <div *ngIf="purchaseNewURL.invalid && (purchaseNewURL.dirty || purchaseNewURL.touched)"
+                                    class="alert alert-danger">
+                                <div *ngIf="purchaseNewURL.errors.required">Please provide Image URL of purchase(500x500)</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div align="center" *ngIf = "updatePurchases[i]">
+                          <button mat-mini-fab class="btn-primary" type= "submit" [disabled]='!purchaseEditForm.valid'>
+                              <mat-icon aria-hidden="false" aria-label="save icon">save</mat-icon>
+                          </button>
+                          <button mat-mini-fab color="warn" class="btn" type= "button" (click)="updatePurchases[i]= false">
+                              <mat-icon aria-hidden="false" aria-label="cancel icon">cancel</mat-icon>
+                          </button>
+                        </div>
+                      </form> 
+                    </div>
+                </mat-card-content>
+            </mat-card>
+          </div>
+    </div>
+    <div class="row" *ngIf= "dontShowPurchases">
+        <div class="col-12">
+            <form [formGroup]="purchaseForm" (ngSubmit)="addNewPurchase()">
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                     <label for="purchaseTitle">Purchase Name</label>
+                     <input type="text" id="purchaseTitle" class="form-control"
+                      formControlName="purchaseTitle" placeholder="Full Name of Purchase">
+                        <div *ngIf="purchaseTitle.invalid && (purchaseTitle.dirty || purchaseTitle.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="purchaseTitle.errors.required"> Name is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="purchaseId">Purchase Id</label>
+                    <input type="number" id="purchaseId" class="form-control"
+                      formControlName="purchaseId" placeholder="Purchase ID eg:123">
+                      <div *ngIf="purchaseId?.invalid && (purchaseId.dirty || purchaseId.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="purchaseId.errors.required"> Purchase Id is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="purchaseCost">Cost of the Purchase</label>
+                    <input type="number" id="purchaseCost" class="form-control" 
+                      formControlName="purchaseCost" placeholder="Amount in Rs.">
+                    <div *ngIf="purchaseCost.invalid && (purchaseCost.dirty || purchaseCost.touched)"
+                          class="alert alert-danger">
+                        <div *ngIf="purchaseCost.errors.required">Cost of Purchase is required.</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="purchaseDesc">Desc</label>
+                    <input type="text" id="purchaseDesc" class="form-control"
+                      formControlName="purchaseDesc" placeholder="Description of Purchase">
+                    <div *ngIf="purchaseDesc.invalid && (purchaseDesc.dirty || purchaseDesc.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="purchaseDesc.errors.required">Please provide Description of purchase</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="purchaseURL">URL of image (500x500)</label>
+                    <input type="text" id="purchaseURL" class="form-control"
+                      formControlName="purchaseURL" placeholder="URL of Purchase">
+                    <div *ngIf="purchaseURL.invalid && (purchaseURL.dirty || purchaseURL.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="purchaseURL.errors.required">Please provide image URL of purchase</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button class="btn btn-success" type="submit" [disabled]='!purchaseForm.valid'>Create</button>
+                    <button class="btn btn-danger" type="button" (click)="resetAll()">Clear</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+.grid-container {
+  margin: 10px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+.text-center{
+  font-weight: bolder;
+}
+.avatar{
+  background-size: cover;
+}
+mat-card img{
+  object-fit: fill; /*this makes the image in src fit to the size specified below*/
+  width: auto; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  height: auto;
+  max-height: 400px;
+}

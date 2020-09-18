@@ -1,0 +1,92 @@
+.mat-card {  
+    margin:0 10px;
+ }
+ .btn{
+    margin: 5px;
+}
+:host ::ng-deep .mat-tab-body-content {
+    overflow: visible;
+}
+.theatre {
+    margin: 10px auto;
+    height: auto;
+    max-width: 320px;
+    border-radius: 35px;
+    background-color: #fff;
+    padding: 20px 10px;
+    box-shadow: 0px 0px 17px -4px #000;
+  }
+  :host {
+    justify-content: center;
+  }  
+  
+  input[type=checkbox]{
+    margin: 4px;
+  }
+  input[type="checkbox"]:checked{
+      background: lightseagreen;
+  }
+  input[value="A4"],input[value="B4"],input[value="C4"],input[value="D4"]{
+      margin-left: 70px;
+  }
+  input[value="E4"], input[value="F4"]{
+    margin-left: 75px;
+  }
+  @media (max-width: 320px) {
+    input[value="A4"],input[value="B4"],input[value="C4"],input[value="D4"]{
+      margin-left: 45px;
+  }
+  input[value="E4"], input[value="F4"]{
+    margin-left: 50px;
+  }
+  }
+  @media (max-width: 280px) {
+    input[type=checkbox]{
+      margin: 3px;
+    }
+    input[value="A4"],input[value="B4"],input[value="C4"],input[value="D4"]{
+      margin-left: 15px;
+  }
+  input[value="E4"], input[value="F4"]{
+    margin-left: 20px;
+  }
+  }
+  .seating{
+    padding-top: 2em; 
+    position: relative;
+    text-align: center;
+  }
+  .screen{
+    height: 25px;
+    margin: 0 20px;
+    margin-top: 70px;
+    border-radius: 100%;
+    box-shadow: 0px -10px 3px 7px #ccc;
+    color: #ccc;
+    text-align: center;
+  }
+  .exit {
+    position: relative;
+    height: 50px;
+  }
+  .exit:before, .exit:after {
+    content: "EXIT";
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0px 5px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    display: block;
+    position: absolute;
+    background: #81c784;
+    color: white;
+    top: 50%;
+  }
+  .exit:before {
+    left: 0;
+  }
+  .exit:after {
+    right: 0;
+  }
+  .mat-slide-toggle{
+    margin:5px;
+  }

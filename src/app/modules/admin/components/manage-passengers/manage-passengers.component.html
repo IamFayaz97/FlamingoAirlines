@@ -1,0 +1,207 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12" align="center">
+            <button mat-raised-button class="btn btn-success" type= "button" id="showAllPassengers"
+              (click)= "showAllPassengers()">List All passengers</button>
+            <button mat-raised-button class="btn btn-primary" type="button"
+             (click)="dontShowAllPassengers()">Add a Passenger</button> 
+        </div>
+    </div>
+    <hr>
+    <div class="row" *ngIf= "showPassengers">
+      <button mat-raised-button class="btn btn-info btn-block" type= "button" id="FilterPassengers"
+        (click)="showFilters=true" *ngIf='!showFilters' style="max-width: 100px;">
+        FILTER <mat-icon>filter_list</mat-icon>
+      </button>
+      <div *ngIf="showFilters" style="margin-left:5px">
+        Filter based on missing:
+        <button mat-raised-button class="btn" type= "button" id="FilterPassengersOnPassport"
+          (click)="filter('passport')">Passport No
+        </button>
+        <button mat-raised-button class="btn" type= "button" id="FilterPassengersOnDOB"
+          (click)="filter('date')">D.O.B
+        </button>
+        <button mat-raised-button class="btn" type= "button" id="FilterPassengersOnAddress"
+          (click)="filter('address')">Address
+        </button>
+        <button mat-raised-button class="btn btn-danger" type= "button" id="FilterPassengers"
+          (click)="filter('cancel')">Cancel
+        </button>
+      </div>     
+        <div class="col-12 mx-auto my-5" *ngFor="let passenger of passengers, let i = index">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title> <kbd>#{{ passenger.passengerName }}</kbd>  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="pull-right" *ngIf="!updatePassengers[i]">
+                        <button mat-mini-fab class="btn btn-secondary" type= "button" (click)="editPassenger(passenger,i)">
+                            <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn" class="btn" type= "button" (click)="deleteDialog(passenger.passengerName)">
+                            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="!updatePassengers[i]">
+                      <h2 *ngIf="passenger.passportNo!=null">Passport No: <b>{{ passenger.passportNo }}</b></h2>
+                      <h3 *ngIf="passenger.passengerdob!=null">DOB: {{ passenger.passengerdob }}</h3>
+                      <h5 *ngIf="passenger.hasInfant==true" ><kbd style="background-color: rgb(71, 126, 216);">
+                        Has Infant <mat-icon style="vertical-align: middle;">child_care</mat-icon> </kbd>
+                      </h5>
+                      <h5 *ngIf="passenger.needWheelChair==true"><kbd style="background-color: rgb(216, 120, 139);">
+                        needs WheelChair <mat-icon style="vertical-align: middle;">event_seat</mat-icon></kbd>
+                      </h5>
+                      <p *ngIf="passenger.passengerAddress!=null">Address: {{ passenger.passengerAddress }} </p>
+                      <div class="row">
+                        <div class="col-6">
+                          <p style="color: crimson;" *ngIf="!passenger.passengerMeals || passenger.passengerMeals.length==0; else elseMealsBlock" >
+                            No Meals Selected</p>
+                          <ng-template #elseMealsBlock>
+                            <h3 *ngIf="passenger.passengerMeals?.length>0">Selected Meals:
+                                <div *ngFor="let meal of passenger.passengerMeals">
+                                  <h4 class="text-info"><input type="checkbox" [checked]="true" disabled> {{meal}}</h4>
+                                </div>
+                            </h3>
+                          </ng-template>
+                          <br>
+                        </div>
+                        <div class="col-6">
+                          <p style="color: crimson;" *ngIf="!passenger.passengerServices || passenger.passengerServices.length==0; else elseServicesBlock">No Services Opted</p>
+                          <ng-template #elseServicesBlock>
+                            <h3 *ngIf="passenger.passengerServices?.length>0">Selected Services:
+                                <div *ngFor="let service of passenger.passengerServices">
+                                    <h4 class="text-info"><input type="checkbox" [checked]="true" disabled> {{service}}</h4>
+                                </div>
+                            </h3>
+                          </ng-template>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="updatePassengers[i]">
+                      <form [formGroup]="passengerEditForm" (ngSubmit)="updatePassenger(passenger.passengerName)">
+                        <div class="row">
+                          <div class="col-12 mx-auto my-5 form-group">
+                            <label for="passportNewNo">Passport Number</label>
+                            <input type="number" id="passportNewNo" class="form-control"
+                              formControlName="passportNewNo" placeholder="New Number of Passport">
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="passengerNewdob">Date Of Birth</label>
+                            <input type="date" id="passengerNewdob" class="form-control"
+                              formControlName="passengerNewdob" max= "{{myDate | date:'yyyy-MM-dd'}}" >
+                          </div>
+                          <div class="col-auto form-group">
+                            <label for="passengerNewAddress">Address</label>
+                            <input type="text" id="passengerNewAddress" class="form-control"
+                              formControlName="passengerNewAddress" placeholder="city's name">
+                          </div>
+                          <br>
+                          <div class="col-auto form-group" >
+                            <mat-slide-toggle color="primary" formControlName="hasInfantNew">Having Infant
+                            </mat-slide-toggle><br><br>
+                          </div>
+                          <div class="col-auto form-group" > 
+                            <mat-slide-toggle color="primary" formControlName="needWheelChairNew">Needs Wheel Chair
+                            </mat-slide-toggle>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-auto">
+                            <mat-label><b> Choose your Meal(s) </b></mat-label>
+                            <mat-select multiple class="form-control" formControlName="passengerNewMeals" placeholder="Select from options" >
+                              <mat-option *ngFor="let meal of meals" [value]="meal.mealName">
+                                {{meal.mealName}}
+                              </mat-option>
+                            </mat-select>
+                          </div>
+                          <div class="col-auto">
+                            <mat-label><b> Choose Ancilliary Service(s)</b></mat-label>
+                            <mat-select multiple class="form-control" formControlName="passengerNewServices" placeholder="select from options">
+                              <mat-option *ngFor="let service of services" [value]="service.serviceName">
+                                {{service.serviceName}}
+                              </mat-option>
+                            </mat-select>
+                          </div>
+                        </div>
+                        <div align="center" *ngIf = "updatePassengers[i]">
+                          <button mat-mini-fab class="btn-primary" type= "submit" [disabled]='!passengerEditForm.valid'>
+                              <mat-icon aria-hidden="false" aria-label="save icon">save</mat-icon>
+                          </button>
+                          <button mat-mini-fab color="warn" class="btn" type= "button" (click)="updatePassengers[i]= false;resetAll()">
+                              <mat-icon aria-hidden="false" aria-label="cancel icon">cancel</mat-icon>
+                          </button>
+                        </div>
+                      </form> 
+                    </div>
+                </mat-card-content>
+            </mat-card>
+          </div>
+    </div>
+    <div class="row" *ngIf= "dontShowPassengers">
+        <div class="col-12">
+            <form [formGroup]="passengerForm" (ngSubmit)="addNewPassenger()">
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                     <label for="passengerName">Passenger Name</label>
+                     <input type="text" id="passengerName" class="form-control"
+                      formControlName="passengerName" placeholder="Full Name of Passenger">
+                        <div *ngIf="passengerName.invalid && (passengerName.dirty || passengerName.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="passengerName.errors.required"> Name is required.</div>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="passportNo">Passport Number</label>
+                    <input type="number" id="passportNo" class="form-control"
+                      formControlName="passportNo" placeholder="Passport Number eg:123">
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="passengerdob">Date of Birth</label>
+                    <input type="date" id="passengerdob" class="form-control"
+                      formControlName="passengerdob" max= "{{myDate | date:'yyyy-MM-dd'}}">
+                  </div>
+                  <div class="col-sm-6 form-group">
+                    <label for="passengerAddress">Address</label>
+                    <input type="text" id="Address" class="form-control"
+                      formControlName="passengerAddress" placeholder="city's name">
+                  </div>
+                  <div class="col-sm-6 form-group" ><br>
+                    <mat-slide-toggle color="primary" id="hasInfant" 
+                      formControlName="hasInfant">Having Infant
+                    </mat-slide-toggle> &nbsp;&nbsp;
+                    <mat-slide-toggle color="primary" id="hasWheechair"
+                      formControlName="needWheelChair">Needs Wheel Chair
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-auto">
+                    <mat-label><b> Choose your Meal(s) </b></mat-label>
+                    <mat-select multiple class="form-control" formControlName="passengerMeals" placeholder="Select from options" >
+                      <mat-option *ngFor="let meal of meals" [value]="meal.mealName" >
+                        {{meal.mealName}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div class="col-auto">
+                    <mat-label><b> Choose Ancilliary Service(s)</b></mat-label>
+                    <mat-select multiple class="form-control" formControlName="passengerServices" placeholder="select from options">
+                      <mat-option *ngFor="let service of services" [value]="service.serviceName">
+                        {{service.serviceName}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                    <br><br>
+                <div class="row" align="center">
+                  <div class="col-xs-12">
+                    <button class="btn btn-success" type="submit" [disabled]='!passengerForm.valid'>Create</button>
+                    <button class="btn btn-danger" type="button" (click)="resetAll()">Clear</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>
